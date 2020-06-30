@@ -62,5 +62,6 @@
 
 .tableSubToolbar {
   border-top: 1px solid value(D60);
+  padding: 12px 30px;
   border-bottom: 1px solid value(D60);
 }
