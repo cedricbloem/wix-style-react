@@ -22,6 +22,7 @@ import testkitReadme from './README.TESTKIT.md';
 import TableExampleRaw from '!raw-loader!./examples/TableExample';
 import TableSkinNeutralExample from '!raw-loader!./examples/TableSkinNeutralExample';
 import TableToolbarExampleRaw from '!raw-loader!./examples/TableToolbarExample';
+import TableSubToolbarExampleRaw from '!raw-loader!./examples/TableSubToolbarExample';
 import TableBulkSelectionCheckboxExampleRaw from '!raw-loader!./examples/TableBulkSelectionCheckboxExample';
 import TableWithUnselectableRowsExampleRaw from '!raw-loader!./examples/TableWithUnselectableRowsExample';
 import TableEmptyStateExampleRaw from '!raw-loader!./examples/TableEmptyStateExample';
@@ -66,8 +67,9 @@ Technically, the following optional children are accepted:
 
 1. \`<Table.Content/>\` - the actual content
 2. \`<Table.ToolbarContainer/>\` - a container for the toolbar. It's also a consumer of the SelectionContext (see Context API)
-3. \`<Table.Titlebar/>\` -  the header of the table, which means, a row with the names of the columns. By default, \`<Table.Content/>\` is rendered with the header. It's mostly useful when setting \`titleBarVisible\` to false, so we can render the title bar independently
-4. \`<Table.EmptyState/>\` - a wrapper of the \`<EmptyState/>\` component for usage within the table
+3. \`<Table.SubToolbar/>\` - a container for the sub-toolbar
+4. \`<Table.Titlebar/>\` -  the header of the table, which means, a row with the names of the columns. By default, \`<Table.Content/>\` is rendered with the header. It's mostly useful when setting \`titleBarVisible\` to false, so we can render the title bar independently
+5. \`<Table.EmptyState/>\` - a wrapper of the \`<EmptyState/>\` component for usage within the table
 `;
 
 export default {
@@ -138,6 +140,13 @@ export default {
                 'This is a basic table that implements a toolbar using `<Table.ToolbarContainer/>` - which receives the SelectionContext (`showSelection` is true in order to enable the selection). Notice that the whole table is wrapped by `<Card/>` so that the toolbar seems like part of the table. In addition, we render the main toolbar when there are no selected rows, and an actions toolbar when some rows are selected. ' +
                 'If you want to manually create the bulk selection ("Select All") UX in the table toolbar (or anywhere else), set `hideBulkSelectionCheckbox` prop and use `<Table.BulkSelectionCheckbox>` component to add bulk selection in another location (under `<Table>`) - see `Table with custom bulk selection checkbox` example.',
               source: TableToolbarExampleRaw,
+              compact: true,
+            },
+            {
+              title: 'Table with Sub-Toolbar',
+              description:
+                'This is a basic table that implements a toolbar and a sub-toolbar using `<Table.SubToolbar/>`. Notice that the whole table is wrapped by `<Card/>` so that the toolbar seems like part of the table.',
+              source: TableSubToolbarExampleRaw,
               compact: true,
             },
             {

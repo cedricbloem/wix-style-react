@@ -18,6 +18,17 @@ The `<ToolbarContainer/>` is a consumer of the Table's SelectionContext (React 1
 | -------- | -------- | ------------ | ---------- | --------------------------- |
 | children | any      |              | false      | A container for the toolbar |
 
+### `<Table.SubToolbar/>`
+
+You can render `<Table.Subtoolbar/>` anywhere inside a `<Table/>` (not necessarily as a direct child).
+
+#### Props
+
+| propName | propType | defaultValue | isRequired | description                 |
+| -------- | -------- | ------------ | ---------- | --------------------------- |
+| children | any      |              | false      | A container for the sub-toolbar |
+
+
 ### `<Table.BulkSelectionCheckbox/>`
 
 You can render `<Table.BulkSelectionCheckbox/>` anywhere inside a `<Table/>` to display a checkbox that enabled bulk selection (`Select All`/`Unselect All`).

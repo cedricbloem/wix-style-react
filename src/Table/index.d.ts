@@ -27,6 +27,7 @@ export default class Table<
 > extends React.Component<TableProps<RowData>> {
   static ToolbarContainer: typeof ToolbarContainer;
   static Titlebar: typeof Titlebar;
+  static SubToolbar: typeof SubToolbar;
   static Content: typeof Content;
   static EmptyState: typeof EmptyState;
   static BulkSelectionCheckbox: typeof BulkSelectionCheckbox;
@@ -35,6 +36,7 @@ export default class Table<
 }
 
 declare const ToolbarContainer: React.SFC;
+declare const SubToolbar: React.FunctionComponent<{ dataHook?: string }>;
 declare const Titlebar: React.SFC<{ dataHook?: string }>;
 declare const Content: React.SFC<{
   titleBarVisible?: boolean;

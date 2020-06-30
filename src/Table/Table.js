@@ -17,6 +17,7 @@ import {
   TableContent,
   TableEmptyState,
   TableBulkSelectionCheckbox,
+  TableSubToolbar,
 } from './components';
 
 const hasUnselectablesSymbol = Symbol('hasUnselectables');
@@ -90,6 +91,7 @@ export class Table extends React.Component {
   static ToolbarContainer = TableToolbarContainer;
   static Titlebar = TableTitleBar;
   static Content = TableContent;
+  static SubToolbar = TableSubToolbar;
   static EmptyState = TableEmptyState;
   static BulkSelectionCheckbox = TableBulkSelectionCheckbox;
 
