@@ -56,11 +56,6 @@ class TablePageExample extends React.Component {
                       : this._renderActionsToolbar({ ...selectionContext })
                   }
                 </Table.ToolbarContainer>
-                <Table.SubToolbar>
-                  <Box>
-                    <Text>This is the Table SubToolbar</Text>
-                  </Box>
-                </Table.SubToolbar>
                 {filteredData.length ? <Table.Titlebar /> : this._renderEmptyState()}
               </Card>
             </Page.Sticky>

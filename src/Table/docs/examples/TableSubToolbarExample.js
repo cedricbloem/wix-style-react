@@ -1,110 +1,231 @@
 /* eslint-disable */
 
 class TableSubToolbarExample extends React.Component {
-  data = [
-    { firstName: 'Meghan', lastName: 'Bishop', status: 'Single' },
-    { firstName: 'Sara', lastName: 'Porter', status: 'Married' },
-    { firstName: 'Deborah', lastName: 'Rhodes', status: "It's complicated" },
-    { firstName: 'Walter', lastName: 'Jenning', status: 'Married' },
-  ];
-
-  filterOptions = [
-    { id: '', value: 'All Statuses' },
-    { id: 'Single', value: 'Single' },
-    { id: 'Married', value: 'Married' },
-    { id: "It's complicated", value: "It's complicated" },
-  ];
-
   state = {
-    activeFilter: '',
-    activeSearch: '',
+    data: this._simulateData(),
+    collectionId: 0,
+    filterId: 0,
+    searchTerm: '',
+    inStock: false,
   };
 
-  _getFilteredData = () => {
-    const { activeFilter, activeSearch } = this.state;
-    return this.data.filter(({ firstName, lastName, status }) => {
-      if (activeFilter && status !== activeFilter) {
-        return false;
-      }
+  render() {
+    const filteredData = this._getFilteredData();
 
-      const searchData = [firstName, lastName, status].join(' ').toLowerCase();
-      const searchQuery = activeSearch.trim().toLowerCase();
-      if (searchQuery && searchData.indexOf(searchQuery) === -1) {
-        return false;
-      }
-
-      return true;
-    });
+    return (
+      <Page height='600px'>
+        <Page.Header title="My Table" />
+        <Page.Content>
+          <Table
+            data={filteredData}
+            columns={[
+              {
+                title: 'Name',
+                render: row => (
+                  <Highlighter match={this.state.searchTerm}>{row.name}</Highlighter>
+                ),
+                width: '30%',
+              },
+              {
+                title: 'SKU',
+                render: row => row.SKU,
+                width: '20%',
+              },
+              {
+                title: 'Price',
+                render: row => row.price,
+                width: '20%',
+              },
+              {
+                title: 'Inventory',
+                render: row => row.inventory,
+                width: '20%',
+              },
+            ]}
+            onSelectionChange={selectedIds =>
+              console.log('Table.onSelectionChange(): selectedIds=', selectedIds)
+            }
+            showSelection
+          >
+            <Page.Sticky>
+              <Card>
+                <Table.ToolbarContainer>
+                  {() => this._renderMainToolbar()}
+                </Table.ToolbarContainer>
+                <Table.SubToolbar>
+                  <Box>
+                    <Text>This is the Table SubToolbar</Text>
+                  </Box>
+                </Table.SubToolbar>
+                {filteredData.length ? <Table.Titlebar /> : this._renderEmptyState()}
+              </Card>
+            </Page.Sticky>
+            <Card>
+              <Table.Content titleBarVisible={false} />
+            </Card>
+          </Table>
+        </Page.Content>
+      </Page>
+    );
   }
 
-  render() {
-    const data = this._getFilteredData();
+  _simulateData() {
+    const initBaseData = setIndex => [
+      {
+        id: `${setIndex}-1`,
+        name: `Apple Towels ${setIndex}`,
+        SKU: '111222',
+        price: '$2.00',
+        inventory: 'In stock',
+        collectionId: 1,
+      },
+      {
+        id: `${setIndex}-2`,
+        name: `Cyan Towels ${setIndex}`,
+        SKU: '222333',
+        price: '$2.00',
+        inventory: 'In stock',
+        collectionId: 1,
+        filterId: 2,
+      },
+      {
+        id: `${setIndex}-3`,
+        name: `Marble Slippers ${setIndex}`,
+        SKU: '333444',
+        price: '$14.00',
+        inventory: 'In stock',
+        collectionId: 2,
+      },
+      {
+        id: `${setIndex}-4`,
+        name: `Red Slippers ${setIndex}`,
+        SKU: '444555',
+        price: '$14.00',
+        inventory: 'Out of stock',
+        collectionId: 2,
+        filterId: 1,
+      },
+    ];
+
+    // Creates five instances of the base data collection and concatenates them into an array
+    return [1, 2, 3, 4, 5].reduce((data, index) => data.concat(initBaseData(index)), []);
+  }
+
+  _renderMainToolbar() {
+    const collectionOptions = [
+      { id: 0, value: 'All' },
+      { id: 1, value: 'Towels' },
+      { id: 2, value: 'Slippers' },
+    ];
+
+    const filterOptions = [
+      { id: 0, value: 'All' },
+      { id: 1, value: 'Red' },
+      { id: 2, value: 'Cyan' },
+    ];
+
     return (
       <Card>
-        <Table
-          data={data}
-          columns={[
-            { title: 'First', render: row => row.firstName },
-            { title: 'Last', render: row => row.lastName },
-            { title: 'Status', render: row => row.status },
-          ]}
-        >
-          {this._renderMainToolbar()}
-          <Table.SubToolbar>
-            <Box>
-              <Text>This is the Table SubToolbar</Text>
-            </Box>
-          </Table.SubToolbar>
-          <Table.Content />
-          {!data.length && (
-            <Table.EmptyState
-              subtitle={
-                <Text>
-                  {'There are no search results matching '}
-                  <Text weight="normal">{`"${this.state.activeSearch}"`}</Text>
-                </Text>
-              }
-            />
-          )}
-        </Table>
+        <TableToolbar>
+          <TableToolbar.ItemGroup position="start">
+            <TableToolbar.Item>
+              <TableToolbar.Label>
+                Product
+                <span style={{ width: '150px' }}>
+                  <Dropdown
+                    options={collectionOptions}
+                    selectedId={this.state.collectionId}
+                    onSelect={selectedOption => {
+                      this.setState({ collectionId: selectedOption.id });
+                    }}
+                    roundInput
+                  />
+                </span>
+              </TableToolbar.Label>
+            </TableToolbar.Item>
+            <TableToolbar.Item>
+              <TableToolbar.Label>
+                Color
+                <span style={{ width: '86px' }}>
+                  <Dropdown
+                    options={filterOptions}
+                    selectedId={this.state.filterId}
+                    onSelect={selectedOption => this.setState({ filterId: selectedOption.id })}
+                    roundInput
+                  />
+                </span>
+              </TableToolbar.Label>
+            </TableToolbar.Item>
+            <TableToolbar.Item>
+              <Checkbox
+                checked={this.state.inStock}
+                onChange={e => this.setState({ inStock: e.target.checked })}
+              >
+                In Stock only
+              </Checkbox>
+            </TableToolbar.Item>
+          </TableToolbar.ItemGroup>
+          <TableToolbar.ItemGroup position="end">
+            <TableToolbar.Item>{this._renderSearch(false)}</TableToolbar.Item>
+          </TableToolbar.ItemGroup>
+        </TableToolbar>
       </Card>
     );
   }
 
-  _renderMainToolbar = () => {
-    return (
-      <TableToolbar>
-        <TableToolbar.ItemGroup position="start">
-          <TableToolbar.Item>
-            <TableToolbar.Title>My Table</TableToolbar.Title>
-          </TableToolbar.Item>
-        </TableToolbar.ItemGroup>
-        <TableToolbar.ItemGroup position="end">
-          <TableToolbar.Item>
-            <TableToolbar.Label>
-              Filter by
-              <div style={{ width: 175 }}>
-                <Dropdown
-                  options={this.filterOptions}
-                  selectedId={this.state.activeFilter}
-                  roundInput
-                  onSelect={({ id }) => this.setState({ activeFilter: id })}
-                  popoverProps={{ appendTo: 'window' }}
-                />
-              </div>
-            </TableToolbar.Label>
-          </TableToolbar.Item>
-          <TableToolbar.Item>
-            <div style={{ width: 200 }}>
-              <Search
-                value={this.state.activeSearch}
-                onChange={e => this.setState({ activeSearch: e.target.value })}
-              />
-            </div>
-          </TableToolbar.Item>
-        </TableToolbar.ItemGroup>
-      </TableToolbar>
-    );
-  };
 
+  _renderEmptyState = () => (
+    <Table.EmptyState
+      title="You haven't added any items yet"
+      subtitle="Add items to your website so people can buy them"
+      image={<Box height={120} width={120} backgroundColor="#dfe5eb" borderRadius="50%" />}
+    >
+      <TextButton suffixIcon={<Icons.ExternalLink />}>Learn how to add items</TextButton>
+    </Table.EmptyState>
+  );
+
+  _clearSearch() {
+    this.setState({
+      collectionId: 0,
+      filterId: 0,
+      searchTerm: '',
+      inStock: false,
+    });
+  }
+
+  _renderSearch(expandable) {
+    return (
+      <Search
+        expandable={expandable}
+        onChange={e => {
+          this.setState({ searchTerm: e.target.value });
+        }}
+        value={this.state.searchTerm}
+      />
+    );
+  }
+
+  _getFilteredData() {
+    let { data } = this.state;
+
+    if (this.state.collectionId > 0) {
+      data = data.filter(row => row.collectionId === this.state.collectionId);
+    }
+
+    if (this.state.filterId > 0) {
+      data = data.filter(row => row.filterId === this.state.filterId);
+    }
+
+    if (this.state.inStock) {
+      data = data.filter(row => row.inventory === 'In stock');
+    }
+
+    if (this.state.searchTerm !== '') {
+      data = data.filter(row =>
+        row.name.toUpperCase().includes(this.state.searchTerm.toUpperCase()),
+      );
+    }
+
+    return data;
+  }
 }
