@@ -92,16 +92,6 @@
   align-items: start;
 }
 
-.labelFromRight.childrenWithInlineLabel {
-    padding-right: 0;
-    padding-left: value(suffixHorizontalPadding);
-}
-
-.labelFromLeft.childrenWithInlineLabel {
-    padding-left: 0;
-    padding-right: value(suffixHorizontalPadding);
-}
-
 .asterisk {
   -st-mixin: text-medium-thin;
   display: inline-block;
