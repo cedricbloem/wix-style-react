@@ -4,7 +4,7 @@ import React from 'react';
 import InfoIcon from '../InfoIcon';
 import Text, { SIZES, SKINS, WEIGHTS } from '../Text';
 import { dataHooks } from './constants';
-import styles from './FormField.scss';
+import styles from './FormField.st.css';
 import { TooltipCommonProps } from '../common/PropTypes/TooltipCommon';
 
 const PLACEMENT = {
