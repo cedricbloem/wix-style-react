@@ -77,8 +77,11 @@
   background: value(backgroundColor);
 }
 
-.root .text {
+.text {
   -st-extends: Caption;
+}
+
+.root .text {
   color: currentColor;
   letter-spacing: 1px;
 }
