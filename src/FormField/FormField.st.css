@@ -88,6 +88,7 @@
 .labelAlignMiddle {
   align-items: center;
 }
+
 .labelAlignTop {
   align-items: start;
 }
@@ -111,6 +112,7 @@
 }
 
 .labelIndicators.inlineWithSuffix {
+  /* Aligns the inline label on the top in case the suffix (whether custom or the char counter) appears */
   margin-top: calc(value(suffixHeight) + value(childrenMargin));
 }
 
