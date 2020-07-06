@@ -3,6 +3,13 @@
   -st-named: B20;
 }
 
+:import {
+  -st-from: "../Foundation/stylable/typography.st.css";
+  -st-named: text-medium-thin;
+
+}
+
+
 :vars{
   suffixHorizontalPadding: 12px;
   inlineLabelMinHeight: 36px;
@@ -99,7 +106,7 @@
 /*}*/
 
 .asterisk {
-  /*@extend .text, .sizeMedium, .weightThin;*/
+  -st-mixin: text-medium-thin;
   display: inline-block;
   color: value(B20);
   font-size: 22px;
