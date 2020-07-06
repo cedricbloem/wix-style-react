@@ -7,7 +7,7 @@ import {
   cleanup,
 } from '../../../test/utils/react';
 
-import styles from '../FormField.scss';
+import styles from '../FormField.st.css';
 import formFieldDriverFactory from '../FormField.driver';
 import { formFieldUniDriverFactory } from '../FormField.uni.driver';
 import FormField from '..';
